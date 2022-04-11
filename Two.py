@@ -15,7 +15,7 @@ github_session.auth = ('Zech123as', "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")
 ST_Form = st.sidebar.form("St_form")
 
 Index_Name = ST_Form.radio("Select Index", ("NIFTY BANK", "NIFTY 50"))
-Expiry_Dist = ST_Form.slider("Select Expiry Distance", min_value = 0, max_value = 40, value = 0)
+Expiry_Dist = ST_Form.slider("Select Expiry Distance", min_value = 0, max_value = 40, value = 2)
 
 if Index_Name == "NIFTY 50":
 	Index_Dist, Lot_Size = 50, 50
@@ -118,7 +118,6 @@ for i in range((Sell_Dist)[0], (Sell_Dist)[1]+1, 1):
 	if Final_DF['Change' + str(i)].max() > Max_Profit:
 		Max_Profit = Final_DF['Change' + str(i)].max()
 	
-	#fig.add_trace(go.Scatter(x=Final_DF.index, y=Final_DF["Change"+str(i)], legendgrouptitle_text = (str(int(i/5)) + "Group"), legendgroup= int(i/5), name = str(i).rjust(4), hovertemplate='Profit: (%{y:5d} )'))
 	fig.add_trace(go.Scatter(x=Final_DF.index, y=Final_DF["Change"+str(i)], mode = 'lines', legendgrouptitle_text = (str(int(i/5)) + "Group"), legendgroup= int(i/5), customdata = Final_DF["FINAL"], name = str(i).rjust(4), hovertemplate='Profit: (%{y:5d} )   |   %{customdata}'))#, visible='legendonly'))
 	
 fig.add_trace(go.Scatter(x= Index_csv_2.index, y= Index_csv_2["o"], yaxis="y2", mode='lines', name = Index_Name, line=dict(color='blue'), line_width=0.8, legendrank = 1))
