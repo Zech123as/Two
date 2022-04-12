@@ -52,7 +52,7 @@ while end_time_input_base.strftime("%A") != "Thursday":
 for i in range((Sell_Dist)[0], (Sell_Dist)[1]+1, 1):
 
 
-	end_time_input = end_time_input_base.copy() - timedelta(days = Expiry_Dist*7)
+	end_time_input = end_time_input_base - timedelta(days = Expiry_Dist*7)
 
 	Data = pickle.loads(github_session.get(f"https://raw.githubusercontent.com/Zech123as/One/main/Expiry_Data/Expiry_Dict_{end_time_input.date()}.pkl").content)
 
