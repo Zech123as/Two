@@ -54,7 +54,6 @@ for Sell_Dist in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 
 	end_time_input = end_time_input_base - timedelta(days = Expiry_Dist*7)
 	
-	st.write(end_time_input)
 	Data = pickle.loads(github_session.get(f"https://raw.githubusercontent.com/Zech123as/One/main/Expiry_Data/Expiry_Dict_{end_time_input.date()}.pkl").content)
 
 	Main_Dict = Data[Index_Name]
@@ -80,8 +79,6 @@ for Sell_Dist in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 	Index_csv_2['c'] = Index_csv_2['c'].ffill().bfill()
 	Index_csv_2['o'].fillna(Index_csv_2['c'], inplace=True)
 	
-	Index_csv_2
-	
 	st.write(Entry_Date, Entry_Time)
 	
 	Index_Entry = Index_csv_2.o[Entry_Date + Entry_Time]
@@ -95,22 +92,7 @@ for Sell_Dist in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 	pe_atm = (round(Index_csv_2.o[Entry_Date + Entry_Time]//Index_Dist)+1)*Index_Dist
 
 	Max_Profit = j = k = 0
-
-
-	#datetime(0,0,0)
-
-	while Entry_Date + timedelta(days = k) != Exit_Date:
-
-		Date_Divider    = Entry_Date + timedelta(days=k+1, hours=9, minutes=7)
-		Date_Divider_DF = pd.DataFrame({"Index_Time": [Date_Divider, Date_Divider], "Index_Value": [Index_Range_Min, Index_Range_Max]})
-
-		fig.add_trace(go.Scatter(x=Date_Divider_DF["Index_Time"], y = Date_Divider_DF["Index_Value"], name = "Index Test", yaxis="y2", mode='lines', line=dict(color='#bab6b6'), line_width=0.7, showlegend = False))
-		fig.add_vline(x= Date_Divider, line_width=0.7, line_dash="solid", line_color="#bab6b6")
-
-		k = k + 1
-
-	#for i in range((Sell_Dist)[0], (Sell_Dist)[1]+1, 1):
-
+	
 	Final_DF = pd.DataFrame()
 
 	ce_sell_dist, pe_sell_dist = Sell_Dist, -Sell_Dist
@@ -171,12 +153,14 @@ for Sell_Dist in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 
 fig.add_trace(go.Scatter(x= Index_csv_2.index, y= Index_csv_2["o"], yaxis="y2", mode='lines', name = Index_Name, line=dict(color='blue'), line_width=0.8, legendrank = 1))
 
-Index_csv_2["Entry_line"] = Index_Entry
-fig.add_trace(go.Scatter(x=Index_csv_2.index, y = Index_csv_2["Entry_line"], line=dict(color='red'), line_width=0.5, name = "Index Entry", yaxis="y2", showlegend = False))
+#Index_csv_2["Entry_line"] = Index_Entry
+#fig.add_trace(go.Scatter(x=Index_csv_2.index, y = Index_csv_2["Entry_line"], line=dict(color='red'), line_width=0.5, name = "Index Entry", yaxis="y2", showlegend = False))
 
 Final_DF_2 = pd.DataFrame()
 Final_DF_2["Index"] = " ( " + (Index_csv_2['o'] - Index_Entry).map('{:+,.2f}'.format) + " )" + (Index_csv_2['o']).round().astype(int).map('{:,}'.format).str.rjust(7)
 Final_DF_2["Max_Profit_column"] = int((Max_Profit/100) + 1)*100
+
+Final_DF_2
 
 fig.add_trace(go.Scatter(x=Final_DF_2.index, y = Final_DF_2["Max_Profit_column"], customdata = Final_DF_2["Index"], name = Index_Name, hovertemplate='%{customdata}', legendrank = 2, line=dict(color='red'), line_width=0.5, showlegend = False))
 
