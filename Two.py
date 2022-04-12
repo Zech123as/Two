@@ -168,6 +168,7 @@ fig.update_xaxes(showgrid=False)
 
 fig.update_yaxes(showgrid=True, gridcolor='#e0e0e0', zerolinecolor = '#989c9b')
 
-fig.update_layout(title = f'{Expiry.date()}, {Expiry.strftime("%A")}', height = 1000, hovermode = "x")
+#fig.update_layout(title = f'{Expiry.date()}, {Expiry.strftime("%A")}', height = 1000, hovermode = "x")
+fig.update_layout(height = 1000, hovermode = "x")
 
 st.plotly_chart(fig, use_container_width = True, config={'displayModeBar': True})
