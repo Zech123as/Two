@@ -53,7 +53,8 @@ for i in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 
 
 	end_time_input = end_time_input_base - timedelta(days = Expiry_Dist*7)
-
+	
+	st.write(end_time_input)
 	Data = pickle.loads(github_session.get(f"https://raw.githubusercontent.com/Zech123as/One/main/Expiry_Data/Expiry_Dict_{end_time_input.date()}.pkl").content)
 
 	Main_Dict = Data[Index_Name]
