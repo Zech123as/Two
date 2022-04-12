@@ -42,13 +42,15 @@ while end_time_input_base.strftime("%A") != "Thursday":
 	end_time_input_base = end_time_input_base - timedelta(days = 1)
 
 
-
+fig_dict = {}
 
 for Sell_Dist in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
-	fig = go.Figure()#layout = go.Layout())
+	
+	fig_dict.update({Sell_Dist : go.Figure()})
+	
 	while Entry_Date + timedelta(days = k) != Exit_Date:
-		Date_Divider    = Entry_Date + timedelta(days=k+1, hours=9, minutes=7)
-		fig.add_vline(x= Date_Divider, line_width=0.7, line_dash="solid", line_color="#bab6b6")
+		Date_Divider = Entry_Date + timedelta(days=k+1, hours=9, minutes=7)
+		fig_dict[Sell_Dist].add_vline(x= Date_Divider, line_width=0.7, line_dash="solid", line_color="#bab6b6")
 		k = k + 1
 
 for Expiry_Dist in range(Expiry_Dist_input):
@@ -149,7 +151,7 @@ for Expiry_Dist in range(Expiry_Dist_input):
 		if Final_DF['Change' + str(Sell_Dist)].max() > Max_Profit:
 			Max_Profit = Final_DF['Change' + str(Sell_Dist)].max()
 
-		fig.add_trace(go.Scatter(x=Final_DF.index, y=Final_DF["Change"+str(Sell_Dist)], mode = 'lines', legendgrouptitle_text = (str(int(Sell_Dist/5)) + "Group"), legendgroup= int(Sell_Dist/5), customdata = Final_DF["FINAL"], name = str(Sell_Dist).rjust(4), hovertemplate='Profit: (%{y:5d} )   |   %{customdata}'))#, visible='legendonly'))
+		fig_dict[Sell_Dist].add_trace(go.Scatter(x=Final_DF.index, y=Final_DF["Change"+str(Sell_Dist)], mode = 'lines', legendgrouptitle_text = (str(int(Sell_Dist/5)) + "Group"), legendgroup= int(Sell_Dist/5), customdata = Final_DF["FINAL"], name = str(Sell_Dist).rjust(4), hovertemplate='Profit: (%{y:5d} )   |   %{customdata}'))#, visible='legendonly'))
 
 
 Final_DF_2 = pd.DataFrame()
@@ -159,13 +161,14 @@ Final_DF_2["Max_Profit_column"] = int((Max_Profit/100) + 1)*100
 
 #fig.add_trace(go.Scatter(x=Final_DF_2.index, y = Final_DF_2["Max_Profit_column"], customdata = Final_DF_2["Index"], name = Index_Name, hovertemplate='%{customdata}', legendrank = 2, line=dict(color='red'), line_width=0.5, showlegend = False))
 
-fig.update_xaxes(showspikes=True, spikedash = "solid", spikecolor="red", spikesnap="hovered data", spikemode="across", spikethickness = 0.5)
-fig.update_xaxes(rangebreaks=[dict(bounds=[15.75, 9], pattern="hour")])
-fig.update_xaxes(rangeslider_visible=True)
-fig.update_xaxes(showgrid=False)
+fig_dict[Sell_Dist].update_xaxes(showspikes=True, spikedash = "solid", spikecolor="red", spikesnap="hovered data", spikemode="across", spikethickness = 0.5)
+fig_dict[Sell_Dist].update_xaxes(rangebreaks=[dict(bounds=[15.75, 9], pattern="hour")])
+fig_dict[Sell_Dist].update_xaxes(rangeslider_visible=True)
+fig_dict[Sell_Dist].update_xaxes(showgrid=False)
 
-fig.update_yaxes(showgrid=True, gridcolor='#e0e0e0', zerolinecolor = '#989c9b')
+fig_dict[Sell_Dist].update_yaxes(showgrid=True, gridcolor='#e0e0e0', zerolinecolor = '#989c9b')
 
-fig.update_layout(height = 900, hovermode = "x")
+fig_dict[Sell_Dist].update_layout(height = 900, hovermode = "x")
 
-st.plotly_chart(fig, use_container_width = True, config={'displayModeBar': True})
+for Sell_Dist in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
+	st.plotly_chart(fig_dict[Sell_Dist], use_container_width = True, config={'displayModeBar': True})
