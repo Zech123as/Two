@@ -16,6 +16,11 @@ ST_Form = st.sidebar.form("St_form")
 
 Index_Name = ST_Form.radio("Select Index", ("NIFTY BANK", "NIFTY 50"))
 Expiry_Dist = ST_Form.slider("Select Expiry Distance", min_value = 0, max_value = 40, value = 2)
+Sell_Dist = ST_Form.slider("Sell Distance", min_value = -15, max_value = 40, value = (-10, -10))
+
+Buy_Lots  = ST_Form.slider("No of Buy Lots", min_value = 0, max_value = 15, value = 5)
+Buy_Dist  = ST_Form.slider("Buy Distance", min_value = 0, max_value = 30, value = 15)
+
 
 if Index_Name == "NIFTY 50":
 	Index_Dist, Lot_Size = 50, 50
@@ -28,6 +33,18 @@ end_time_input = datetime.now().replace(hour=0, minute=0, second=0, microsecond=
 
 while end_time_input.strftime("%A") != "Thursday":
 	end_time_input = end_time_input - timedelta(days = 1)
+
+
+
+
+
+
+
+
+
+
+for i in range((Sell_Dist)[0], (Sell_Dist)[1]+1, 1):
+
 
 end_time_input = end_time_input - timedelta(days = Expiry_Dist*7)
 
@@ -46,10 +63,8 @@ Expiry =  Index_csv_1.time[len(Index_csv_1)-1]
 
 Entry_Date, Exit_Date = ST_Form.select_slider("Entry & Exit Date Inputs", options = Index_csv_1.time, value = (Index_csv_1.time[0], Index_csv_1.time[len(Index_csv_1.time)-1]), format_func = lambda x: x.date())
 Time_Input = ST_Form.slider("Entry & Exit Time Inputs", min_value = time(9, 15), max_value = time(15, 30), value = (time(9, 30), time(15, 30)), step = timedelta(minutes = 15))
-Buy_Lots  = ST_Form.slider("No of Buy Lots", min_value = 0, max_value = 15, value = 5)
-Buy_Dist  = ST_Form.slider("Buy Distance", min_value = 0, max_value = 30, value = 15)
-Sell_Dist = ST_Form.slider("Sell Distance", min_value = -15, max_value = 40, value = (-15, 20))
 
+ 
 ST_Form.form_submit_button("Submit")
 
 Entry_Time = timedelta( hours=list(Time_Input)[0].hour, minutes = list(Time_Input)[0].minute )
@@ -70,7 +85,7 @@ pe_atm = (round(Index_csv_2.o[Entry_Date + Entry_Time]//Index_Dist)+1)*Index_Dis
 Max_Profit = j = k = 0
 
 
-
+datetime(0,0,0)
 
 while Entry_Date + timedelta(days = k) != Exit_Date:
 	
@@ -82,44 +97,44 @@ while Entry_Date + timedelta(days = k) != Exit_Date:
 	
 	k = k + 1
 
-for i in range((Sell_Dist)[0], (Sell_Dist)[1]+1, 1):
-	
-	Final_DF = pd.DataFrame()
-	
-	ce_sell_dist, pe_sell_dist = i, -i
-	
-	ce_sell = Main_Dict[str(ce_atm + ce_sell_dist*Index_Dist) + 'CE'].reindex(pd.date_range(Entry_Date + Entry_Time, Exit_Date + Exit_Time, freq = '1min')).between_time('09:16','15:30')
-	pe_sell = Main_Dict[str(pe_atm + pe_sell_dist*Index_Dist) + 'PE'].reindex(pd.date_range(Entry_Date + Entry_Time, Exit_Date + Exit_Time, freq = '1min')).between_time('09:16','15:30')
-	
-	ce_sell_entry, pe_sell_entry = ce_sell.o[Entry_Date + Entry_Time], pe_sell.o[Entry_Date + Entry_Time]
-	ce_sell_exit , pe_sell_exit  = ce_sell.o[Exit_Date + Exit_Time]  , pe_sell.o[Exit_Date + Exit_Time]
-	
-	
-	ce_buy_dist, pe_buy_dist = i + Buy_Dist, -i-Buy_Dist
-	
-	ce_buy = Main_Dict[str(ce_atm + ce_buy_dist*Index_Dist) + 'CE'].reindex(pd.date_range(Entry_Date + Entry_Time, Exit_Date + Exit_Time, freq = '1min')).between_time('09:16','15:30')
-	pe_buy = Main_Dict[str(pe_atm + pe_buy_dist*Index_Dist) + 'PE'].reindex(pd.date_range(Entry_Date + Entry_Time, Exit_Date + Exit_Time, freq = '1min')).between_time('09:16','15:30')
-	
-	ce_buy_entry, pe_buy_entry = ce_buy.o[Entry_Date + Entry_Time], pe_buy.o[Entry_Date + Entry_Time]
-	ce_buy_exit , pe_buy_exit  = ce_buy.o[Exit_Date + Exit_Time]  , pe_buy.o[Exit_Date + Exit_Time]
-	
-	
-	
-	Final_DF['Change' + str(i)] = ((ce_sell_entry + pe_sell_entry) - (ce_sell['o'] + pe_sell['o'])) + (((ce_buy['o'] + pe_buy['o']) - (ce_buy_entry + pe_buy_entry))*Buy_Lots)
-	
-	Final_DF["CE_SELL"] = "CE SELL (" + str(round(ce_sell_entry)).rjust(5) + " |" + ce_sell['o'].round().astype(int).astype(str).str.rjust(5) + " )"
-	Final_DF["PE_SELL"] = "PE SELL (" + str(round(pe_sell_entry)).rjust(5) + " |" + pe_sell['o'].round().astype(int).astype(str).str.rjust(5) + " )"
-	
-	Final_DF["CE_BUY"]  = "CE BUY (" + str(round(ce_buy_entry)).rjust(5) + " |" + ce_buy['o'].round().astype(int).astype(str).str.rjust(5) + " )"
-	Final_DF["PE_BUY"]  = "PE BUY (" + str(round(pe_buy_entry)).rjust(5) + " |" + pe_buy['o'].round().astype(int).astype(str).str.rjust(5) + " )"	
-	
-	Final_DF["FINAL"] = Final_DF["CE_SELL"] + "   |   " + Final_DF["PE_SELL"] + "   |   " + "( " + Final_DF["CE_BUY"] + "   |   " + Final_DF["PE_BUY"] + " ) " + " * " + str(Buy_Lots)
-	
-	if Final_DF['Change' + str(i)].max() > Max_Profit:
-		Max_Profit = Final_DF['Change' + str(i)].max()
-	
-	fig.add_trace(go.Scatter(x=Final_DF.index, y=Final_DF["Change"+str(i)], mode = 'lines', legendgrouptitle_text = (str(int(i/5)) + "Group"), legendgroup= int(i/5), customdata = Final_DF["FINAL"], name = str(i).rjust(4), hovertemplate='Profit: (%{y:5d} )   |   %{customdata}'))#, visible='legendonly'))
-	
+#for i in range((Sell_Dist)[0], (Sell_Dist)[1]+1, 1):
+
+Final_DF = pd.DataFrame()
+
+ce_sell_dist, pe_sell_dist = i, -i
+
+ce_sell = Main_Dict[str(ce_atm + ce_sell_dist*Index_Dist) + 'CE'].reindex(pd.date_range(Entry_Date + Entry_Time, Exit_Date + Exit_Time, freq = '1min')).between_time('09:16','15:30')
+pe_sell = Main_Dict[str(pe_atm + pe_sell_dist*Index_Dist) + 'PE'].reindex(pd.date_range(Entry_Date + Entry_Time, Exit_Date + Exit_Time, freq = '1min')).between_time('09:16','15:30')
+
+ce_sell_entry, pe_sell_entry = ce_sell.o[Entry_Date + Entry_Time], pe_sell.o[Entry_Date + Entry_Time]
+ce_sell_exit , pe_sell_exit  = ce_sell.o[Exit_Date + Exit_Time]  , pe_sell.o[Exit_Date + Exit_Time]
+
+
+ce_buy_dist, pe_buy_dist = i + Buy_Dist, -i-Buy_Dist
+
+ce_buy = Main_Dict[str(ce_atm + ce_buy_dist*Index_Dist) + 'CE'].reindex(pd.date_range(Entry_Date + Entry_Time, Exit_Date + Exit_Time, freq = '1min')).between_time('09:16','15:30')
+pe_buy = Main_Dict[str(pe_atm + pe_buy_dist*Index_Dist) + 'PE'].reindex(pd.date_range(Entry_Date + Entry_Time, Exit_Date + Exit_Time, freq = '1min')).between_time('09:16','15:30')
+
+ce_buy_entry, pe_buy_entry = ce_buy.o[Entry_Date + Entry_Time], pe_buy.o[Entry_Date + Entry_Time]
+ce_buy_exit , pe_buy_exit  = ce_buy.o[Exit_Date + Exit_Time]  , pe_buy.o[Exit_Date + Exit_Time]
+
+
+
+Final_DF['Change' + str(i)] = ((ce_sell_entry + pe_sell_entry) - (ce_sell['o'] + pe_sell['o'])) + (((ce_buy['o'] + pe_buy['o']) - (ce_buy_entry + pe_buy_entry))*Buy_Lots)
+
+Final_DF["CE_SELL"] = "CE SELL (" + str(round(ce_sell_entry)).rjust(5) + " |" + ce_sell['o'].round().astype(int).astype(str).str.rjust(5) + " )"
+Final_DF["PE_SELL"] = "PE SELL (" + str(round(pe_sell_entry)).rjust(5) + " |" + pe_sell['o'].round().astype(int).astype(str).str.rjust(5) + " )"
+
+Final_DF["CE_BUY"]  = "CE BUY (" + str(round(ce_buy_entry)).rjust(5) + " |" + ce_buy['o'].round().astype(int).astype(str).str.rjust(5) + " )"
+Final_DF["PE_BUY"]  = "PE BUY (" + str(round(pe_buy_entry)).rjust(5) + " |" + pe_buy['o'].round().astype(int).astype(str).str.rjust(5) + " )"	
+
+Final_DF["FINAL"] = Final_DF["CE_SELL"] + "   |   " + Final_DF["PE_SELL"] + "   |   " + "( " + Final_DF["CE_BUY"] + "   |   " + Final_DF["PE_BUY"] + " ) " + " * " + str(Buy_Lots)
+
+if Final_DF['Change' + str(i)].max() > Max_Profit:
+	Max_Profit = Final_DF['Change' + str(i)].max()
+
+fig.add_trace(go.Scatter(x=Final_DF.index, y=Final_DF["Change"+str(i)], mode = 'lines', legendgrouptitle_text = (str(int(i/5)) + "Group"), legendgroup= int(i/5), customdata = Final_DF["FINAL"], name = str(i).rjust(4), hovertemplate='Profit: (%{y:5d} )   |   %{customdata}'))#, visible='legendonly'))
+
 fig.add_trace(go.Scatter(x= Index_csv_2.index, y= Index_csv_2["o"], yaxis="y2", mode='lines', name = Index_Name, line=dict(color='blue'), line_width=0.8, legendrank = 1))
 
 Index_csv_2["Entry_line"] = Index_Entry
