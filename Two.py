@@ -79,10 +79,7 @@ for i in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 
 	
 	
-	.reindex(pd.date_range(Entry_Date + Entry_Time, Exit_Date + Exit_Time, freq = '1min')).between_time('09:16','15:30')
-	Index_csv_2
-	Index_csv_2.index = Index_csv_2.index - (end_time_input - datetime(2010,1,7))
-	
+	Index_csv_2.reindex(pd.date_range(Entry_Date + Entry_Time, Exit_Date + Exit_Time, freq = '1min')).between_time('09:16','15:30')	
 	Index_csv_2
 	
 	Index_Entry = Index_csv_2.o[Entry_Date + Entry_Time]
