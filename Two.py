@@ -64,7 +64,7 @@ for i in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 
 
 
-	Index_csv_1 = Main_Dict["Index_csv_1"]
+	Index_csv_1 = (Main_Dict["Index_csv_1"]).copy()
 
 	Expiry =  Index_csv_1.time[len(Index_csv_1)-1]
 
