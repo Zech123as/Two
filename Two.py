@@ -161,14 +161,18 @@ Final_DF_2["Max_Profit_column"] = int((Max_Profit/100) + 1)*100
 
 #fig.add_trace(go.Scatter(x=Final_DF_2.index, y = Final_DF_2["Max_Profit_column"], customdata = Final_DF_2["Index"], name = Index_Name, hovertemplate='%{customdata}', legendrank = 2, line=dict(color='red'), line_width=0.5, showlegend = False))
 
-fig_dict[Sell_Dist].update_xaxes(showspikes=True, spikedash = "solid", spikecolor="red", spikesnap="hovered data", spikemode="across", spikethickness = 0.5)
-fig_dict[Sell_Dist].update_xaxes(rangebreaks=[dict(bounds=[15.75, 9], pattern="hour")])
-fig_dict[Sell_Dist].update_xaxes(rangeslider_visible=True)
-fig_dict[Sell_Dist].update_xaxes(showgrid=False)
 
-fig_dict[Sell_Dist].update_yaxes(showgrid=True, gridcolor='#e0e0e0', zerolinecolor = '#989c9b')
 
-fig_dict[Sell_Dist].update_layout(height = 900, hovermode = "x")
 
 for Sell_Dist in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
+
+	fig_dict[Sell_Dist].update_xaxes(showspikes=True, spikedash = "solid", spikecolor="red", spikesnap="hovered data", spikemode="across", spikethickness = 0.5)
+	fig_dict[Sell_Dist].update_xaxes(rangebreaks=[dict(bounds=[15.75, 9], pattern="hour")])
+	fig_dict[Sell_Dist].update_xaxes(rangeslider_visible=True)
+	fig_dict[Sell_Dist].update_xaxes(showgrid=False)
+	
+	fig_dict[Sell_Dist].update_yaxes(showgrid=True, gridcolor='#e0e0e0', zerolinecolor = '#989c9b')
+	
+	fig_dict[Sell_Dist].update_layout(title = Sell_Dist, height = 900, hovermode = "x")
+	
 	st.plotly_chart(fig_dict[Sell_Dist], use_container_width = True, config={'displayModeBar': True})
