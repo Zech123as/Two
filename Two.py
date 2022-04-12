@@ -44,18 +44,12 @@ while end_time_input_base.strftime("%A") != "Thursday":
 
 
 
-
-
-fig = go.Figure(layout = go.Layout())
-
-while Entry_Date + timedelta(days = k) != Exit_Date:
-	
-	Date_Divider    = Entry_Date + timedelta(days=k+1, hours=9, minutes=7)
-	
-	fig.add_vline(x= Date_Divider, line_width=0.7, line_dash="solid", line_color="#bab6b6")
-	
-	k = k + 1
-
+for Sell_Dist in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
+	fig = go.Figure(layout = go.Layout())
+	while Entry_Date + timedelta(days = k) != Exit_Date:
+		Date_Divider    = Entry_Date + timedelta(days=k+1, hours=9, minutes=7)
+		fig.add_vline(x= Date_Divider, line_width=0.7, line_dash="solid", line_color="#bab6b6")
+		k = k + 1
 
 for Expiry_Dist in range(Expiry_Dist_input):
 	
