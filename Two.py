@@ -44,7 +44,7 @@ while end_time_input_base.strftime("%A") != "Thursday":
 
 
 
-
+fig = go.Figure(layout = go.Layout())
 
 
 for Expiry_Dist in range(Expiry_Dist_input):
@@ -82,8 +82,6 @@ for Expiry_Dist in range(Expiry_Dist_input):
 	Index_Exit  = Index_csv_2.o[Exit_Date  + Exit_Time ]
 
 	Index_Range_Min, Index_Range_Max = int((Index_csv_2["o"].min()/100)-1)*100, int((Index_csv_2["o"].max()/100)+2)*100
-
-	fig = go.Figure(layout = go.Layout())
 
 	ce_atm = (round(Index_csv_2.o[Entry_Date + Entry_Time]//Index_Dist)-0)*Index_Dist
 	pe_atm = (round(Index_csv_2.o[Entry_Date + Entry_Time]//Index_Dist)+1)*Index_Dist
