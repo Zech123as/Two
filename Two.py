@@ -152,7 +152,7 @@ for Sell_Dist in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 	if Final_DF['Change' + str(Sell_Dist)].max() > Max_Profit:
 		Max_Profit = Final_DF['Change' + str(Sell_Dist)].max()
 
-	fig.add_trace(go.Scatter(x=Final_DF.index, y=Final_DF["Change"+str(Sell_Dist)], mode = 'lines', legendgrouptitle_text = (str(int(i/5)) + "Group"), legendgroup= int(Sell_Dist/5), customdata = Final_DF["FINAL"], name = str(Sell_Dist).rjust(4), hovertemplate='Profit: (%{y:5d} )   |   %{customdata}'))#, visible='legendonly'))
+	fig.add_trace(go.Scatter(x=Final_DF.index, y=Final_DF["Change"+str(Sell_Dist)], mode = 'lines', legendgrouptitle_text = (str(int(Sell_Dist/5)) + "Group"), legendgroup= int(Sell_Dist/5), customdata = Final_DF["FINAL"], name = str(Sell_Dist).rjust(4), hovertemplate='Profit: (%{y:5d} )   |   %{customdata}'))#, visible='legendonly'))
 
 fig.add_trace(go.Scatter(x= Index_csv_2.index, y= Index_csv_2["o"], yaxis="y2", mode='lines', name = Index_Name, line=dict(color='blue'), line_width=0.8, legendrank = 1))
 
