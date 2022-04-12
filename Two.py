@@ -49,7 +49,7 @@ while end_time_input_base.strftime("%A") != "Thursday":
 
 
 
-for i in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
+for Sell_Dist in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 
 
 	end_time_input = end_time_input_base - timedelta(days = Expiry_Dist*7)
@@ -104,7 +104,7 @@ for i in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 
 	Final_DF = pd.DataFrame()
 
-	ce_sell_dist, pe_sell_dist = i, -i
+	ce_sell_dist, pe_sell_dist = Sell_Dist, -Sell_Dist
 
 	ce_sell = Main_Dict[str(ce_atm + ce_sell_dist*Index_Dist) + 'CE'].copy()
 	pe_sell = Main_Dict[str(pe_atm + pe_sell_dist*Index_Dist) + 'PE'].copy()
@@ -119,7 +119,7 @@ for i in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 	ce_sell_exit , pe_sell_exit  = ce_sell.o[Exit_Date + Exit_Time]  , pe_sell.o[Exit_Date + Exit_Time]
 
 
-	ce_buy_dist, pe_buy_dist = i + Buy_Dist, -i-Buy_Dist
+	ce_buy_dist, pe_buy_dist = Sell_Dist + Buy_Dist, -Sell_Dist-Buy_Dist
 
 	ce_buy = Main_Dict[str(ce_atm + ce_buy_dist*Index_Dist) + 'CE'].copy()
 	pe_buy = Main_Dict[str(pe_atm + pe_buy_dist*Index_Dist) + 'PE'].copy()
@@ -135,7 +135,7 @@ for i in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 
 
 
-	Final_DF['Change' + str(i)] = ((ce_sell_entry + pe_sell_entry) - (ce_sell['o'] + pe_sell['o'])) + (((ce_buy['o'] + pe_buy['o']) - (ce_buy_entry + pe_buy_entry))*Buy_Lots)
+	Final_DF['Change' + str(Sell_Dist)] = ((ce_sell_entry + pe_sell_entry) - (ce_sell['o'] + pe_sell['o'])) + (((ce_buy['o'] + pe_buy['o']) - (ce_buy_entry + pe_buy_entry))*Buy_Lots)
 
 	Final_DF["CE_SELL"] = "CE SELL (" + str(round(ce_sell_entry)).rjust(5) + " |" + ce_sell['o'].round().astype(int).astype(str).str.rjust(5) + " )"
 	Final_DF["PE_SELL"] = "PE SELL (" + str(round(pe_sell_entry)).rjust(5) + " |" + pe_sell['o'].round().astype(int).astype(str).str.rjust(5) + " )"
@@ -145,10 +145,10 @@ for i in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 
 	Final_DF["FINAL"] = Final_DF["CE_SELL"] + "   |   " + Final_DF["PE_SELL"] + "   |   " + "( " + Final_DF["CE_BUY"] + "   |   " + Final_DF["PE_BUY"] + " ) " + " * " + str(Buy_Lots)
 
-	if Final_DF['Change' + str(i)].max() > Max_Profit:
-		Max_Profit = Final_DF['Change' + str(i)].max()
+	if Final_DF['Change' + str(Sell_Dist)].max() > Max_Profit:
+		Max_Profit = Final_DF['Change' + str(Sell_Dist)].max()
 
-	fig.add_trace(go.Scatter(x=Final_DF.index, y=Final_DF["Change"+str(i)], mode = 'lines', legendgrouptitle_text = (str(int(i/5)) + "Group"), legendgroup= int(i/5), customdata = Final_DF["FINAL"], name = str(i).rjust(4), hovertemplate='Profit: (%{y:5d} )   |   %{customdata}'))#, visible='legendonly'))
+	fig.add_trace(go.Scatter(x=Final_DF.index, y=Final_DF["Change"+str(Sell_Dist)], mode = 'lines', legendgrouptitle_text = (str(int(i/5)) + "Group"), legendgroup= int(Sell_Dist/5), customdata = Final_DF["FINAL"], name = str(Sell_Dist).rjust(4), hovertemplate='Profit: (%{y:5d} )   |   %{customdata}'))#, visible='legendonly'))
 
 fig.add_trace(go.Scatter(x= Index_csv_2.index, y= Index_csv_2["o"], yaxis="y2", mode='lines', name = Index_Name, line=dict(color='blue'), line_width=0.8, legendrank = 1))
 
