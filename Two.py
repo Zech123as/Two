@@ -92,10 +92,7 @@ for Expiry_Dist in range(Expiry_Dist_input):
 
 	
 	for Sell_Dist in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
-	
-	
-		Final_DF = pd.DataFrame()
-
+		
 		ce_sell_dist, pe_sell_dist = Sell_Dist, -Sell_Dist
 
 		ce_sell = Main_Dict[str(ce_atm + ce_sell_dist*Index_Dist) + 'CE'].copy()
@@ -136,7 +133,9 @@ for Expiry_Dist in range(Expiry_Dist_input):
 
 		ce_buy_entry, pe_buy_entry = ce_buy.o[Entry_Date + Entry_Time], pe_buy.o[Entry_Date + Entry_Time]
 		ce_buy_exit , pe_buy_exit  = ce_buy.o[Exit_Date + Exit_Time]  , pe_buy.o[Exit_Date + Exit_Time]
-
+		
+		Final_DF = pd.DataFrame()
+		
 		Final_DF['Change' + str(Sell_Dist)] = ((ce_sell_entry + pe_sell_entry) - (ce_sell['o'] + pe_sell['o'])) + (((ce_buy['o'] + pe_buy['o']) - (ce_buy_entry + pe_buy_entry))*Buy_Lots)
 
 		Final_DF["CE_SELL"] = "CE SELL (" + str(round(ce_sell_entry)).rjust(5) + " |" + ce_sell['o'].round().astype(int).astype(str).str.rjust(5) + " )"
