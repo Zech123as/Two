@@ -86,7 +86,7 @@ for Sell_Dist in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 
 	Index_Range_Min, Index_Range_Max = int((Index_csv_2["o"].min()/100)-1)*100, int((Index_csv_2["o"].max()/100)+2)*100
 
-	fig = go.Figure(layout = go.Layout(yaxis2=dict(domain=[0, 0.29], range=[Index_Range_Min, Index_Range_Max]), yaxis=dict(domain=[0.3, 1])))
+	fig = go.Figure(layout = go.Layout())
 
 	ce_atm = (round(Index_csv_2.o[Entry_Date + Entry_Time]//Index_Dist)-0)*Index_Dist
 	pe_atm = (round(Index_csv_2.o[Entry_Date + Entry_Time]//Index_Dist)+1)*Index_Dist
@@ -151,7 +151,7 @@ for Sell_Dist in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 
 	fig.add_trace(go.Scatter(x=Final_DF.index, y=Final_DF["Change"+str(Sell_Dist)], mode = 'lines', legendgrouptitle_text = (str(int(Sell_Dist/5)) + "Group"), legendgroup= int(Sell_Dist/5), customdata = Final_DF["FINAL"], name = str(Sell_Dist).rjust(4), hovertemplate='Profit: (%{y:5d} )   |   %{customdata}'))#, visible='legendonly'))
 
-fig.add_trace(go.Scatter(x= Index_csv_2.index, y= Index_csv_2["o"], yaxis="y2", mode='lines', name = Index_Name, line=dict(color='blue'), line_width=0.8, legendrank = 1))
+#fig.add_trace(go.Scatter(x= Index_csv_2.index, y= Index_csv_2["o"], yaxis="y2", mode='lines', name = Index_Name, line=dict(color='blue'), line_width=0.8, legendrank = 1))
 
 #Index_csv_2["Entry_line"] = Index_Entry
 #fig.add_trace(go.Scatter(x=Index_csv_2.index, y = Index_csv_2["Entry_line"], line=dict(color='red'), line_width=0.5, name = "Index Entry", yaxis="y2", showlegend = False))
@@ -160,7 +160,6 @@ Final_DF_2 = pd.DataFrame()
 Final_DF_2["Index"] = " ( " + (Index_csv_2['o'] - Index_Entry).map('{:+,.2f}'.format) + " )" + (Index_csv_2['o']).round().astype(int).map('{:,}'.format).str.rjust(7)
 Final_DF_2["Max_Profit_column"] = int((Max_Profit/100) + 1)*100
 
-Final_DF_2
 
 fig.add_trace(go.Scatter(x=Final_DF_2.index, y = Final_DF_2["Max_Profit_column"], customdata = Final_DF_2["Index"], name = Index_Name, hovertemplate='%{customdata}', legendrank = 2, line=dict(color='red'), line_width=0.5, showlegend = False))
 
