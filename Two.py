@@ -85,7 +85,7 @@ for i in range((Sell_Dist)[0], (Sell_Dist)[1]+1, 1):
 	Max_Profit = j = k = 0
 
 
-	datetime(0,0,0)
+	#datetime(0,0,0)
 
 	while Entry_Date + timedelta(days = k) != Exit_Date:
 
