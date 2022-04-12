@@ -65,8 +65,9 @@ for i in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 
 
 	Index_csv_1 = (Main_Dict["Index_csv_1"]).copy()
-	
+	Index_csv_1
 	Index_csv_1.index = Index_csv_1.index - (end_time_input - datetime(2010,1,7))
+	Index_csv_1
 	
 	Entry_Time = timedelta( hours=list(Time_Input)[0].hour, minutes = list(Time_Input)[0].minute )
 	Exit_Time  = timedelta( hours=list(Time_Input)[1].hour, minutes = list(Time_Input)[1].minute )
