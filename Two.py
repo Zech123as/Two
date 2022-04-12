@@ -71,16 +71,9 @@ for i in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 	Exit_Time  = timedelta( hours=list(Time_Input)[1].hour, minutes = list(Time_Input)[1].minute )
 
 	Index_csv_2 = Main_Dict["Index_csv_2"].copy()
-	
-	Index_csv_2
 	Index_csv_2.index = Index_csv_2.index - (end_time_input - datetime(2010,1,7))
 	
-	Index_csv_2
-
-	
-	
 	Index_csv_2.reindex(pd.date_range(Entry_Date + Entry_Time, Exit_Date + Exit_Time, freq = '1min')).between_time('09:16','15:30')	
-	Index_csv_2
 	
 	Index_Entry = Index_csv_2.o[Entry_Date + Entry_Time]
 	Index_Exit  = Index_csv_2.o[Exit_Date  + Exit_Time ]
@@ -113,8 +106,14 @@ for i in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 
 	ce_sell_dist, pe_sell_dist = i, -i
 
-	ce_sell = Main_Dict[str(ce_atm + ce_sell_dist*Index_Dist) + 'CE'].reindex(pd.date_range(Entry_Date + Entry_Time, Exit_Date + Exit_Time, freq = '1min')).between_time('09:16','15:30')
-	pe_sell = Main_Dict[str(pe_atm + pe_sell_dist*Index_Dist) + 'PE'].reindex(pd.date_range(Entry_Date + Entry_Time, Exit_Date + Exit_Time, freq = '1min')).between_time('09:16','15:30')
+	ce_sell = Main_Dict[str(ce_atm + ce_sell_dist*Index_Dist) + 'CE'].copy()
+	pe_sell = Main_Dict[str(pe_atm + pe_sell_dist*Index_Dist) + 'PE'].copy()
+	
+	ce_sell.index = ce_sell.index - (end_time_input - datetime(2010,1,7))
+	pe_sell.index = pe_sell.index - (end_time_input - datetime(2010,1,7))
+	
+	ce_sell.reindex(pd.date_range(Entry_Date + Entry_Time, Exit_Date + Exit_Time, freq = '1min')).between_time('09:16','15:30')
+	pe_sell.reindex(pd.date_range(Entry_Date + Entry_Time, Exit_Date + Exit_Time, freq = '1min')).between_time('09:16','15:30')
 
 	ce_sell_entry, pe_sell_entry = ce_sell.o[Entry_Date + Entry_Time], pe_sell.o[Entry_Date + Entry_Time]
 	ce_sell_exit , pe_sell_exit  = ce_sell.o[Exit_Date + Exit_Time]  , pe_sell.o[Exit_Date + Exit_Time]
@@ -122,8 +121,14 @@ for i in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 
 	ce_buy_dist, pe_buy_dist = i + Buy_Dist, -i-Buy_Dist
 
-	ce_buy = Main_Dict[str(ce_atm + ce_buy_dist*Index_Dist) + 'CE'].reindex(pd.date_range(Entry_Date + Entry_Time, Exit_Date + Exit_Time, freq = '1min')).between_time('09:16','15:30')
-	pe_buy = Main_Dict[str(pe_atm + pe_buy_dist*Index_Dist) + 'PE'].reindex(pd.date_range(Entry_Date + Entry_Time, Exit_Date + Exit_Time, freq = '1min')).between_time('09:16','15:30')
+	ce_buy = Main_Dict[str(ce_atm + ce_buy_dist*Index_Dist) + 'CE'].copy()
+	pe_buy = Main_Dict[str(pe_atm + pe_buy_dist*Index_Dist) + 'PE'].copy()
+	
+	ce_buy.index = ce_buy.index - (end_time_input - datetime(2010,1,7))
+	pe_buy.index = pe_buy.index - (end_time_input - datetime(2010,1,7))
+	
+	ce_buy.reindex(pd.date_range(Entry_Date + Entry_Time, Exit_Date + Exit_Time, freq = '1min')).between_time('09:16','15:30')
+	ce_buy.reindex(pd.date_range(Entry_Date + Entry_Time, Exit_Date + Exit_Time, freq = '1min')).between_time('09:16','15:30')
 
 	ce_buy_entry, pe_buy_entry = ce_buy.o[Entry_Date + Entry_Time], pe_buy.o[Entry_Date + Entry_Time]
 	ce_buy_exit , pe_buy_exit  = ce_buy.o[Exit_Date + Exit_Time]  , pe_buy.o[Exit_Date + Exit_Time]
