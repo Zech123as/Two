@@ -20,7 +20,7 @@ Expiry_Dist = ST_Form.slider("Select Expiry Distance", min_value = 0, max_value 
 Entry_Date, Exit_Date = ST_Form.select_slider("Entry & Exit Date Inputs", options = [datetime(2010, 1, 1), datetime(2010, 1, 4), datetime(2010, 1, 5), datetime(2010, 1, 6), datetime(2010, 1, 7)], value = (datetime(2010, 1, 1),datetime(2010, 1, 7)), format_func = lambda x: x.strftime("%A"))
 Time_Input = ST_Form.slider("Entry & Exit Time Inputs", min_value = time(9, 15), max_value = time(15, 30), value = (time(9, 30), time(15, 30)), step = timedelta(minutes = 15))
 
-Sell_Dist = ST_Form.slider("Sell Distance", min_value = -15, max_value = 40, value = (-10, -10))
+Sell_Dist_input = ST_Form.slider("Sell Distance", min_value = -15, max_value = 40, value = (-10, -10))
 
 Buy_Lots  = ST_Form.slider("No of Buy Lots", min_value = 0, max_value = 15, value = 5)
 Buy_Dist  = ST_Form.slider("Buy Distance", min_value = 0, max_value = 30, value = 15)
@@ -49,7 +49,7 @@ while end_time_input_base.strftime("%A") != "Thursday":
 
 
 
-for i in range((Sell_Dist)[0], (Sell_Dist)[1]+1, 1):
+for i in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 
 
 	end_time_input = end_time_input_base - timedelta(days = Expiry_Dist*7)
@@ -71,7 +71,9 @@ for i in range((Sell_Dist)[0], (Sell_Dist)[1]+1, 1):
 	Exit_Time  = timedelta( hours=list(Time_Input)[1].hour, minutes = list(Time_Input)[1].minute )
 
 	Index_csv_2 = Main_Dict["Index_csv_2"].reindex(pd.date_range(Entry_Date + Entry_Time, Exit_Date + Exit_Time, freq = '1min')).between_time('09:16','15:30')
-
+	
+	Index_csv_2
+	
 	Index_Entry = Index_csv_2.o[Entry_Date + Entry_Time]
 	Index_Exit  = Index_csv_2.o[Exit_Date  + Exit_Time ]
 
