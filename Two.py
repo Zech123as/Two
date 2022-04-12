@@ -5,7 +5,6 @@ import streamlit as st
 import pandas as pd
 import requests
 import pickle
-import os
 
 st.set_page_config(layout="wide")
 
@@ -50,8 +49,9 @@ while end_time_input_base.strftime("%A") != "Thursday":
 
 
 for Sell_Dist in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
-
-
+	
+	for 
+	
 	end_time_input = end_time_input_base - timedelta(days = Expiry_Dist*7)
 	
 	Data = pickle.loads(github_session.get(f"https://raw.githubusercontent.com/Zech123as/One/main/Expiry_Data/Expiry_Dict_{end_time_input.date()}.pkl").content)
