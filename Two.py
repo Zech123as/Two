@@ -13,6 +13,8 @@ github_session.auth = ('Zech123as', "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")
 
 ST_Form = st.sidebar.form("St_form")
 
+Max_Profit = j = k = 0
+
 Index_Name = ST_Form.radio("Select Index", ("NIFTY BANK", "NIFTY 50"))
 Expiry_Dist_input = ST_Form.slider("Select Expiry Distance", min_value = 0, max_value = 40, value = 2)
 
@@ -93,8 +95,6 @@ for Expiry_Dist in range(Expiry_Dist_input):
 
 	ce_atm = (round(Index_csv_2.o[Entry_Date + Entry_Time]//Index_Dist)-0)*Index_Dist
 	pe_atm = (round(Index_csv_2.o[Entry_Date + Entry_Time]//Index_Dist)+1)*Index_Dist
-
-	Max_Profit = j = k = 0
 
 	
 	for Sell_Dist in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
