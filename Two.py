@@ -155,7 +155,7 @@ Final_DF_2["Index"] = " ( " + (Index_csv_2['o'] - Index_Entry).map('{:+,.2f}'.fo
 Final_DF_2["Max_Profit_column"] = int((Max_Profit/100) + 1)*100
 
 
-fig.add_trace(go.Scatter(x=Final_DF_2.index, y = Final_DF_2["Max_Profit_column"], customdata = Final_DF_2["Index"], name = Index_Name, hovertemplate='%{customdata}', legendrank = 2, line=dict(color='red'), line_width=0.5, showlegend = False))
+#fig.add_trace(go.Scatter(x=Final_DF_2.index, y = Final_DF_2["Max_Profit_column"], customdata = Final_DF_2["Index"], name = Index_Name, hovertemplate='%{customdata}', legendrank = 2, line=dict(color='red'), line_width=0.5, showlegend = False))
 
 fig.update_xaxes(showspikes=True, spikedash = "solid", spikecolor="red", spikesnap="hovered data", spikemode="across", spikethickness = 0.5)
 fig.update_xaxes(rangebreaks=[dict(bounds=[15.75, 9], pattern="hour")])
