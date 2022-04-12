@@ -65,14 +65,14 @@ for i in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 
 
 	Index_csv_1 = (Main_Dict["Index_csv_1"]).copy()
-	Index_csv_1
 	Index_csv_1["time"] = Index_csv_1["time"] - (end_time_input - datetime(2010,1,7))
-	Index_csv_1
 	
 	Entry_Time = timedelta( hours=list(Time_Input)[0].hour, minutes = list(Time_Input)[0].minute )
 	Exit_Time  = timedelta( hours=list(Time_Input)[1].hour, minutes = list(Time_Input)[1].minute )
 
 	Index_csv_2 = Main_Dict["Index_csv_2"].reindex(pd.date_range(Entry_Date + Entry_Time, Exit_Date + Exit_Time, freq = '1min')).between_time('09:16','15:30')
+	Index_csv_2
+	Index_csv_2.index = Index_csv_2.index - (end_time_input - datetime(2010,1,7))
 	
 	Index_csv_2
 	
