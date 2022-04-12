@@ -16,10 +16,16 @@ ST_Form = st.sidebar.form("St_form")
 
 Index_Name = ST_Form.radio("Select Index", ("NIFTY BANK", "NIFTY 50"))
 Expiry_Dist = ST_Form.slider("Select Expiry Distance", min_value = 0, max_value = 40, value = 2)
+
+Entry_Date, Exit_Date = ST_Form.select_slider("Entry & Exit Date Inputs", options = [datetime(2010, 1, 1), datetime(2010, 1, 4), datetime(2010, 1, 5), datetime(2010, 1, 6), datetime(2010, 1, 7)], value = (,), format_func = lambda x: x.strftime("%A"))
+Time_Input = ST_Form.slider("Entry & Exit Time Inputs", min_value = time(9, 15), max_value = time(15, 30), value = (time(9, 30), time(15, 30)), step = timedelta(minutes = 15))
+
 Sell_Dist = ST_Form.slider("Sell Distance", min_value = -15, max_value = 40, value = (-10, -10))
 
 Buy_Lots  = ST_Form.slider("No of Buy Lots", min_value = 0, max_value = 15, value = 5)
 Buy_Dist  = ST_Form.slider("Buy Distance", min_value = 0, max_value = 30, value = 15)
+
+ST_Form.form_submit_button("Submit")
 
 
 if Index_Name == "NIFTY 50":
@@ -29,10 +35,10 @@ elif Index_Name == "NIFTY BANK":
 else:
 	print("Incorrect Index Name")
 
-end_time_input = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+end_time_input_base = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
 
-while end_time_input.strftime("%A") != "Thursday":
-	end_time_input = end_time_input - timedelta(days = 1)
+while end_time_input_base.strftime("%A") != "Thursday":
+	end_time_input_base = end_time_input_base - timedelta(days = 1)
 
 
 
@@ -46,7 +52,7 @@ while end_time_input.strftime("%A") != "Thursday":
 for i in range((Sell_Dist)[0], (Sell_Dist)[1]+1, 1):
 
 
-	end_time_input = end_time_input - timedelta(days = Expiry_Dist*7)
+	end_time_input = end_time_input_base.copy() - timedelta(days = Expiry_Dist*7)
 
 	Data = pickle.loads(github_session.get(f"https://raw.githubusercontent.com/Zech123as/One/main/Expiry_Data/Expiry_Dict_{end_time_input.date()}.pkl").content)
 
@@ -60,12 +66,6 @@ for i in range((Sell_Dist)[0], (Sell_Dist)[1]+1, 1):
 	Index_csv_1 = Main_Dict["Index_csv_1"]
 
 	Expiry =  Index_csv_1.time[len(Index_csv_1)-1]
-
-	Entry_Date, Exit_Date = ST_Form.select_slider("Entry & Exit Date Inputs", options = Index_csv_1.time, value = (Index_csv_1.time[0], Index_csv_1.time[len(Index_csv_1.time)-1]), format_func = lambda x: x.date())
-	Time_Input = ST_Form.slider("Entry & Exit Time Inputs", min_value = time(9, 15), max_value = time(15, 30), value = (time(9, 30), time(15, 30)), step = timedelta(minutes = 15))
-
-
-	ST_Form.form_submit_button("Submit")
 
 	Entry_Time = timedelta( hours=list(Time_Input)[0].hour, minutes = list(Time_Input)[0].minute )
 	Exit_Time  = timedelta( hours=list(Time_Input)[1].hour, minutes = list(Time_Input)[1].minute )
