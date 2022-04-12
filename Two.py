@@ -78,9 +78,7 @@ for Sell_Dist in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 	
 	Index_csv_2['c'] = Index_csv_2['c'].ffill().bfill()
 	Index_csv_2['o'].fillna(Index_csv_2['c'], inplace=True)
-	
-	st.write(Entry_Date, Entry_Time)
-	
+		
 	Index_Entry = Index_csv_2.o[Entry_Date + Entry_Time]
 	Index_Exit  = Index_csv_2.o[Exit_Date  + Exit_Time ]
 
