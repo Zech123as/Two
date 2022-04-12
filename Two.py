@@ -17,7 +17,7 @@ ST_Form = st.sidebar.form("St_form")
 Index_Name = ST_Form.radio("Select Index", ("NIFTY BANK", "NIFTY 50"))
 Expiry_Dist = ST_Form.slider("Select Expiry Distance", min_value = 0, max_value = 40, value = 2)
 
-Entry_Date, Exit_Date = ST_Form.select_slider("Entry & Exit Date Inputs", options = [datetime(2010, 1, 1), datetime(2010, 1, 4), datetime(2010, 1, 5), datetime(2010, 1, 6), datetime(2010, 1, 7)], value = (,), format_func = lambda x: x.strftime("%A"))
+Entry_Date, Exit_Date = ST_Form.select_slider("Entry & Exit Date Inputs", options = [datetime(2010, 1, 1), datetime(2010, 1, 4), datetime(2010, 1, 5), datetime(2010, 1, 6), datetime(2010, 1, 7)], value = (datetime(2010, 1, 1),datetime(2010, 1, 7)), format_func = lambda x: x.strftime("%A"))
 Time_Input = ST_Form.slider("Entry & Exit Time Inputs", min_value = time(9, 15), max_value = time(15, 30), value = (time(9, 30), time(15, 30)), step = timedelta(minutes = 15))
 
 Sell_Dist = ST_Form.slider("Sell Distance", min_value = -15, max_value = 40, value = (-10, -10))
