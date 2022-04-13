@@ -153,12 +153,15 @@ for Expiry_Dist in range(Expiry_Dist_input):
 			
 		if Index_Range in range(0, 1001):
 			Legend_Group = "0 - 1000"
+			Group_Rank = 1
 		elif Index_Range in range(1001, 1501):
 			Legend_Group = "1000 - 1500"
+			Group_Rank = 2
 		elif Index_Range > 1500:
 			Legend_Group = "> 1500"
+			Group_Rank = 3
 		
-		fig_dict[Sell_Dist].add_trace(go.Scatter(x=Final_DF.index, y=Final_DF["Change"+str(Sell_Dist)], mode = 'lines', legendgrouptitle_text = Legend_Group, legendgroup= Legend_Group, customdata = Final_DF["FINAL"], name = str(end_time_input.date()).rjust(10), hovertemplate='Profit: (%{y:5d} )   |   %{customdata}'))#, visible='legendonly'))
+		fig_dict[Sell_Dist].add_trace(go.Scatter(x=Final_DF.index, y=Final_DF["Change"+str(Sell_Dist)], legendrank = Group_Rank, mode = 'lines', legendgrouptitle_text = Legend_Group, legendgroup= Legend_Group, customdata = Final_DF["FINAL"], name = str(end_time_input.date()).rjust(10), hovertemplate='Profit: (%{y:5d} )   |   %{customdata}'))#, visible='legendonly'))
 
 
 Final_DF_2 = pd.DataFrame()
