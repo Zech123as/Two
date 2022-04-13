@@ -6,6 +6,9 @@ import pandas as pd
 import requests
 import pickle
 
+
+T2 = datetime.now()
+
 st.set_page_config(layout="wide")
 
 github_session = requests.Session()
@@ -40,8 +43,6 @@ end_time_input_base = datetime.now().replace(hour=0, minute=0, second=0, microse
 
 while end_time_input_base.strftime("%A") != "Thursday":
 	end_time_input_base = end_time_input_base - timedelta(days = 1)
-
-st.write(end_time_input_base)
 
 fig_dict = {}
 
@@ -196,3 +197,5 @@ for Sell_Dist in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 	fig_dict[Sell_Dist].update_layout(title = Sell_Dist, height = 900, hovermode = "x")
 	
 	st.plotly_chart(fig_dict[Sell_Dist], use_container_width = True, config={'displayModeBar': True})
+
+(datetime.now() - T2)
