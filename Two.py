@@ -67,9 +67,12 @@ for Expiry_Dist in range(Expiry_Dist_input[0], Expiry_Dist_input[1] + 1, 1):
 	
 	Main_Dict.keys()
 	
-	Index_csv_1
+	
 	
 	Index_csv_1 = (Main_Dict["Index_csv_1"]).copy()
+	
+	Index_csv_1
+	
 	Index_csv_1["time"] = Index_csv_1["time"] - (end_time_input - datetime(2010,1,7))
 	
 	
