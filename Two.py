@@ -119,9 +119,6 @@ for Expiry_Dist in range(Expiry_Dist_input[0], Expiry_Dist_input[1] + 1, 1):
 
 			ce_sell = ce_sell.reindex(pd.date_range(Entry_Date + Entry_Time, Exit_Date + Exit_Time, freq = '1min')).between_time('09:16','15:30')
 			pe_sell = pe_sell.reindex(pd.date_range(Entry_Date + Entry_Time, Exit_Date + Exit_Time, freq = '1min')).between_time('09:16','15:30')
-
-			str(ce_atm + ce_sell_dist*Index_Dist) + 'CE'
-			str(pe_atm + pe_sell_dist*Index_Dist) + 'PE'
 			
 			ce_sell['c'] = ce_sell['c'].ffill().bfill()
 			pe_sell['c'] = pe_sell['c'].ffill().bfill()
@@ -184,10 +181,6 @@ for Expiry_Dist in range(Expiry_Dist_input[0], Expiry_Dist_input[1] + 1, 1):
 Final_DF_2 = pd.DataFrame()
 Final_DF_2["Index"] = " ( " + (Index_csv_2['o'] - Index_Entry).map('{:+,.2f}'.format) + " )" + (Index_csv_2['o']).round().astype(int).map('{:,}'.format).str.rjust(7)
 Final_DF_2["Max_Profit_column"] = int((Max_Profit/100) + 1)*100
-
-
-#fig.add_trace(go.Scatter(x=Final_DF_2.index, y = Final_DF_2["Max_Profit_column"], customdata = Final_DF_2["Index"], name = Index_Name, hovertemplate='%{customdata}', legendrank = 2, line=dict(color='red'), line_width=0.5, showlegend = False))
-
 
 
 
