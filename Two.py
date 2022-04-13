@@ -65,19 +65,22 @@ for Expiry_Dist in range(Expiry_Dist_input[0], Expiry_Dist_input[1] + 1, 1):
 	Main_Dict = Data[Index_Name]
 	
 	
+	Main_Dict.keys()
 	
-	
-	
+	Index_csv_1
 	
 	Index_csv_1 = (Main_Dict["Index_csv_1"]).copy()
 	Index_csv_1["time"] = Index_csv_1["time"] - (end_time_input - datetime(2010,1,7))
 	
-	Index_csv_1
+	
 	
 	Entry_Time = timedelta( hours=list(Time_Input)[0].hour, minutes = list(Time_Input)[0].minute )
 	Exit_Time  = timedelta( hours=list(Time_Input)[1].hour, minutes = list(Time_Input)[1].minute )
 
 	Index_csv_2 = Main_Dict["Index_csv_2"].copy()
+	
+	Index_csv_2
+	
 	Index_csv_2.index = Index_csv_2.index - (end_time_input - datetime(2010,1,7))
 	
 	Index_csv_2 = Index_csv_2.reindex(pd.date_range(Entry_Date + Entry_Time, Exit_Date + Exit_Time, freq = '1min')).between_time('09:16','15:30')	
@@ -85,7 +88,7 @@ for Expiry_Dist in range(Expiry_Dist_input[0], Expiry_Dist_input[1] + 1, 1):
 	Index_csv_2['c'] = Index_csv_2['c'].ffill().bfill()
 	Index_csv_2['o'].fillna(Index_csv_2['c'], inplace=True)
 	
-	Index_csv_2
+	
 	
 	Index_Entry = Index_csv_2.o[Entry_Date + Entry_Time]
 	Index_Exit  = Index_csv_2.o[Exit_Date  + Exit_Time ]
@@ -110,6 +113,9 @@ for Expiry_Dist in range(Expiry_Dist_input[0], Expiry_Dist_input[1] + 1, 1):
 
 		ce_sell = ce_sell.reindex(pd.date_range(Entry_Date + Entry_Time, Exit_Date + Exit_Time, freq = '1min')).between_time('09:16','15:30')
 		pe_sell = pe_sell.reindex(pd.date_range(Entry_Date + Entry_Time, Exit_Date + Exit_Time, freq = '1min')).between_time('09:16','15:30')
+		
+		str(ce_atm + ce_sell_dist*Index_Dist) + 'CE'
+		str(pe_atm + pe_sell_dist*Index_Dist) + 'PE'
 		
 		ce_sell
 		pe_sell
