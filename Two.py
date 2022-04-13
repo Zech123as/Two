@@ -16,7 +16,7 @@ ST_Form = st.sidebar.form("St_form")
 Max_Profit = j = 0
 
 Index_Name = ST_Form.radio("Select Index", ("NIFTY BANK", "NIFTY 50"))
-Expiry_Dist_input = ST_Form.slider("Select Expiry Distance", min_value = 0, max_value = 40, value = 2)
+Expiry_Dist_input = ST_Form.slider("Select Expiry Distance", min_value = 0, max_value = 40, value = (2,2))
 
 Entry_Date, Exit_Date = ST_Form.select_slider("Entry & Exit Date Inputs", options = [datetime(2010, 1, 1), datetime(2010, 1, 4), datetime(2010, 1, 5), datetime(2010, 1, 6), datetime(2010, 1, 7)], value = (datetime(2010, 1, 1),datetime(2010, 1, 7)), format_func = lambda x: x.strftime("%A"))
 Time_Input = ST_Form.slider("Entry & Exit Time Inputs", min_value = time(9, 15), max_value = time(15, 30), value = (time(9, 30), time(15, 30)), step = timedelta(minutes = 15))
@@ -55,7 +55,7 @@ for Sell_Dist in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 		fig_dict[Sell_Dist].add_vline(x= Date_Divider, line_width=0.7, line_dash="solid", line_color="#bab6b6")
 		k = k + 1
 
-for Expiry_Dist in range(Expiry_Dist_input):
+for Expiry_Dist in range(Expiry_Dist_input[0], Expiry_Dist_input[1] + 1, 1):
 	
 	end_time_input = end_time_input_base - timedelta(days = Expiry_Dist*7)
 	
