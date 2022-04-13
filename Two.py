@@ -13,7 +13,7 @@ github_session.auth = ('Zech123as', "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")
 
 ST_Form = st.sidebar.form("St_form")
 
-Max_Profit = j = k = 0
+Max_Profit = j = 0
 
 Index_Name = ST_Form.radio("Select Index", ("NIFTY BANK", "NIFTY 50"))
 Expiry_Dist_input = ST_Form.slider("Select Expiry Distance", min_value = 0, max_value = 40, value = 2)
@@ -48,16 +48,14 @@ for Sell_Dist in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 	
 	fig_dict.update({Sell_Dist : go.Figure()})
 	
+	k = 0
+	
 	while Entry_Date + timedelta(days = k) != Exit_Date:
 		Date_Divider = Entry_Date + timedelta(days=k+1, hours=9, minutes=7)
 		fig_dict[Sell_Dist].add_vline(x= Date_Divider, line_width=0.7, line_dash="solid", line_color="#bab6b6")
 		k = k + 1
 
 for Expiry_Dist in range(Expiry_Dist_input):
-	
-	
-	
-	
 	
 	end_time_input = end_time_input_base - timedelta(days = Expiry_Dist*7)
 	
@@ -88,10 +86,12 @@ for Expiry_Dist in range(Expiry_Dist_input):
 	Index_Exit  = Index_csv_2.o[Exit_Date  + Exit_Time ]
 
 	Index_Range_Min, Index_Range_Max = int((Index_csv_2["o"].min()/100)-1)*100, int((Index_csv_2["o"].max()/100)+2)*100
+	
+	Index_Range = int(Index_csv_2["o"].max() - Index_csv_2["o"].min())
 
 	ce_atm = (round(Index_csv_2.o[Entry_Date + Entry_Time]//Index_Dist)-0)*Index_Dist
 	pe_atm = (round(Index_csv_2.o[Entry_Date + Entry_Time]//Index_Dist)+1)*Index_Dist
-
+	
 	
 	for Sell_Dist in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 		
@@ -150,8 +150,15 @@ for Expiry_Dist in range(Expiry_Dist_input):
 
 		if Final_DF['Change' + str(Sell_Dist)].max() > Max_Profit:
 			Max_Profit = Final_DF['Change' + str(Sell_Dist)].max()
-
-		fig_dict[Sell_Dist].add_trace(go.Scatter(x=Final_DF.index, y=Final_DF["Change"+str(Sell_Dist)], mode = 'lines', legendgrouptitle_text = (str(int(Sell_Dist/5)) + "Group"), legendgroup= int(Sell_Dist/5), customdata = Final_DF["FINAL"], name = str(Sell_Dist).rjust(4), hovertemplate='Profit: (%{y:5d} )   |   %{customdata}'))#, visible='legendonly'))
+			
+		if Index_Range in range(0, 1001):
+			Legend_Group = "0 - 1000"
+		elif Index_Range in range(1001, 1501):
+			Legend_Group = "1000 - 1500"
+		elif Index_Range > 1500:
+			Legend_Group = "> 1500"
+		
+		fig_dict[Sell_Dist].add_trace(go.Scatter(x=Final_DF.index, y=Final_DF["Change"+str(Sell_Dist)], mode = 'lines', legendgrouptitle_text = Legend_Group, legendgroup= Legend_Group, customdata = Final_DF["FINAL"], name = str(end_time_input.date()).rjust(10), hovertemplate='Profit: (%{y:5d} )   |   %{customdata}'))#, visible='legendonly'))
 
 
 Final_DF_2 = pd.DataFrame()
