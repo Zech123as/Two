@@ -62,7 +62,7 @@ for Expiry_Dist in range(Expiry_Dist_input[0], Expiry_Dist_input[1] + 1, 1):
 	
 	if end_time_input == datetime(2021, 11, 4):
 		end_time_input = end_time_input
-	elif:
+	elif True:
 		
 		T1 = datetime.now()
 		
