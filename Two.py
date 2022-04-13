@@ -41,6 +41,7 @@ end_time_input_base = datetime.now().replace(hour=0, minute=0, second=0, microse
 while end_time_input_base.strftime("%A") != "Thursday":
 	end_time_input_base = end_time_input_base - timedelta(days = 1)
 
+st.write(end_time_input_base)
 
 fig_dict = {}
 
