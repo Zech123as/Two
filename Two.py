@@ -150,6 +150,7 @@ for Expiry_Dist in range(Expiry_Dist_input[0], Expiry_Dist_input[1] + 1, 1):
 
 			Final_DF['Change' + str(Sell_Dist)] = (ce_sell_entry + pe_sell_entry - (ce_sell['o'] + pe_sell['o'])) + (ce_buy['o'] + pe_buy['o'] - (ce_buy_entry + pe_buy_entry))*Buy_Lots
 			
+			Max_Profit = Final_DF['Change' + str(Sell_Dist)].max()
 			
 			Final_DF["CE_SELL"] = "(" + str(round(ce_sell_entry)).rjust(4) + ", " + ce_sell['o'].round().astype(int).astype(str).str.rjust(4) + ")"
 			Final_DF["PE_SELL"] = "(" + str(round(pe_sell_entry)).rjust(4) + ", " + pe_sell['o'].round().astype(int).astype(str).str.rjust(4) + ")"
@@ -189,7 +190,7 @@ for Sell_Dist in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 	
 	fig_dict[Sell_Dist].update_yaxes(showgrid=True, gridcolor='#e0e0e0', zerolinecolor = '#989c9b')
 	
-	fig_dict[Sell_Dist].update_layout(title = Sell_Dist, height = 900, hovermode = "x", hoverlabel=dict(bgcolor='rgba(255,255,255,0.75)', font_color = "black",font_size=12, font_family="Lucida Sans Typewriter"))
+	fig_dict[Sell_Dist].update_layout(title = Sell_Dist, height = 900, hovermode = "x", hoverlabel=dict(bgcolor='white', font_color = "black",font_size=12, font_family="Lucida Sans Typewriter"))
 	
 	st.plotly_chart(fig_dict[Sell_Dist], use_container_width = True, config={'displayModeBar': True})
 
