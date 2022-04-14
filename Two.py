@@ -148,7 +148,7 @@ for Expiry_Dist in range(Expiry_Dist_input[0], Expiry_Dist_input[1] + 1, 1):
 
 			Final_DF = pd.DataFrame()
 
-			Final_DF['Change' + str(Sell_Dist)] = (ce_sell_entry + pe_sell_entry - ce_sell['o'] + pe_sell['o']) + (ce_buy['o'] + pe_buy['o'] - ce_buy_entry + pe_buy_entry)*Buy_Lots
+			Final_DF['Change' + str(Sell_Dist)] = (ce_sell_entry + pe_sell_entry - (ce_sell['o'] + pe_sell['o'])) + (ce_buy['o'] + pe_buy['o'] - (ce_buy_entry + pe_buy_entry))*Buy_Lots
 			
 			
 			Final_DF["CE_SELL"] = "(" + str(round(ce_sell_entry)).rjust(5) + " |" + ce_sell['o'].round().astype(int).astype(str).str.rjust(5) + " )"
