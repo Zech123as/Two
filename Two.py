@@ -175,6 +175,8 @@ for Expiry_Dist in range(Expiry_Dist_input[0], Expiry_Dist_input[1] + 1, 1):
 			elif Index_Range > 1500:
 				Legend_Group = "> 1500"
 				Group_Rank = 3
+				
+			Final_DF
 
 			fig_dict[Sell_Dist].add_trace(go.Scatter(x=Final_DF.index, y=Final_DF["Change"+str(Sell_Dist)], legendrank = Group_Rank, mode = 'lines', legendgrouptitle_text = Legend_Group, legendgroup= Legend_Group, customdata = Final_DF, name = str(end_time_input.date()).rjust(10), hovertemplate='Profit: (%{y:5d} )   |   %{customdata[7]}<br>%{customdata[8]}'))
 
