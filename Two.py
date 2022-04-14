@@ -163,7 +163,7 @@ for Expiry_Dist in range(Expiry_Dist_input[0], Expiry_Dist_input[1] + 1, 1):
 			Final_DF["FINAL 3"] = Final_DF["Final 1"] + " | CE " + Final_DF["CE_SELL"] + (ce_sell_entry - ce_sell["o"]).round().astype(int).astype(str).str.rjust(6) + "*" + str(Sell_Lots) + " | " + Final_DF["CE_BUY"] + (ce_buy["o"] - ce_buy_entry).round().astype(int).astype(str).str.rjust(6) + "*" + str(Buy_Lots)
 			Final_DF["FINAL 4"] = Final_DF["Final 2"] + " | PE " + Final_DF["PE_SELL"] + (pe_sell_entry - pe_sell["o"]).round().astype(int).astype(str).str.rjust(6) + "*" + str(Sell_Lots) + " | " + Final_DF["PE_BUY"] + (pe_buy["o"] - pe_buy_entry).round().astype(int).astype(str).str.rjust(6) + "*" + str(Buy_Lots)
 			
-			Max_Profit = Final_DF['Change' + str(Sell_Dist)].max()
+			Max_Profit = (Final_DF['Change' + str(Sell_Dist)].copy()).astype(int).max()
 			st.write(Max_Profit)
 			if Max_Profit in range(0, 201):
 				Legend_Group = "0 - 200"
