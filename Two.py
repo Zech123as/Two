@@ -158,11 +158,11 @@ for Expiry_Dist in range(Expiry_Dist_input[0], Expiry_Dist_input[1] + 1, 1):
 			Final_DF["PE_BUY"]  = "(" + str(round(pe_buy_entry )).rjust(4) + " " +  pe_buy['o'].round().astype(int).astype(str).str.rjust(4) + ")"
 			
 			
-			Final_DF["Final 1"] = "P&L: " + (Final_DF['Change' + str(Sell_Dist)]).round().astype(int).astype(str).str.rjust(5)
-			Final_DF["Final 2"] = "Chg: " + (Index_csv_2["o"] - Index_Entry).round().astype(int).astype(str).str.rjust(5)
+			Final_DF["Final 1"] = "P&L:" + (Final_DF['Change' + str(Sell_Dist)]).round().astype(int).astype(str).str.rjust(5)
+			Final_DF["Final 2"] = "Chg:" + (Index_csv_2["o"] - Index_Entry).round().astype(int).astype(str).str.rjust(5)
 			
-			Final_DF["FINAL 3"] = Final_DF["Final 1"] + " CE " + Final_DF["CE_SELL"] + " * " + str(Sell_Lots) + "   |   " + Final_DF["CE_BUY"] + " * " + str(Buy_Lots)
-			Final_DF["FINAL 4"] = Final_DF["Final 2"] + " PE " + Final_DF["PE_SELL"] + " * " + str(Sell_Lots) + "   |   " + Final_DF["PE_BUY"] + " * " + str(Buy_Lots)
+			Final_DF["FINAL 3"] = Final_DF["Final 1"] + " CE " + Final_DF["CE_SELL"] + "*" + str(Sell_Lots) + " | " + Final_DF["CE_BUY"] + "*" + str(Buy_Lots)
+			Final_DF["FINAL 4"] = Final_DF["Final 2"] + " PE " + Final_DF["PE_SELL"] + "*" + str(Sell_Lots) + " | " + Final_DF["PE_BUY"] + "*" + str(Buy_Lots)
 				
 			if Final_DF['Change' + str(Sell_Dist)].max() > Max_Profit:
 				Max_Profit = Final_DF['Change' + str(Sell_Dist)].max()
@@ -189,7 +189,7 @@ for Sell_Dist in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 	
 	fig_dict[Sell_Dist].update_yaxes(showgrid=True, gridcolor='#e0e0e0', zerolinecolor = '#989c9b')
 	
-	fig_dict[Sell_Dist].update_layout(title = Sell_Dist, height = 900, hovermode = "x", hoverlabel=dict(font_color = "white",font_size=14, font_family="Lucida Sans Typewriter"))
+	fig_dict[Sell_Dist].update_layout(title = Sell_Dist, height = 900, hovermode = "x", hoverlabel=dict(font_color = "white",font_size=12, font_family="Lucida Sans Typewriter"))
 	
 	st.plotly_chart(fig_dict[Sell_Dist], use_container_width = True, config={'displayModeBar': True})
 
