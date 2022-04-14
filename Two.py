@@ -150,7 +150,6 @@ for Expiry_Dist in range(Expiry_Dist_input[0], Expiry_Dist_input[1] + 1, 1):
 
 			Final_DF['Change' + str(Sell_Dist)] = (ce_sell_entry + pe_sell_entry - (ce_sell['o'] + pe_sell['o'])) + (ce_buy['o'] + pe_buy['o'] - (ce_buy_entry + pe_buy_entry))*Buy_Lots
 			
-			Max_Profit = Final_DF['Change' + str(Sell_Dist)].max()
 			
 			Final_DF["CE_SELL"] = "(" + str(round(ce_sell_entry)).rjust(4) + ", " + ce_sell['o'].round().astype(int).astype(str).str.rjust(4) + ")"
 			Final_DF["PE_SELL"] = "(" + str(round(pe_sell_entry)).rjust(4) + ", " + pe_sell['o'].round().astype(int).astype(str).str.rjust(4) + ")"
@@ -161,22 +160,23 @@ for Expiry_Dist in range(Expiry_Dist_input[0], Expiry_Dist_input[1] + 1, 1):
 			
 			Final_DF["Final 1"] = "P&L:" + (Final_DF['Change' + str(Sell_Dist)]).round().astype(int).astype(str).str.rjust(5)
 			Final_DF["Final 2"] = "Chg:" + (Index_csv_2["o"] - Index_Entry).round().astype(int).astype(str).str.rjust(5)
-			
 			Final_DF["FINAL 3"] = Final_DF["Final 1"] + " | CE " + Final_DF["CE_SELL"] + (ce_sell_entry - ce_sell["o"]).round().astype(int).astype(str).str.rjust(6) + "*" + str(Sell_Lots) + " | " + Final_DF["CE_BUY"] + (ce_buy["o"] - ce_buy_entry).round().astype(int).astype(str).str.rjust(6) + "*" + str(Buy_Lots)
 			Final_DF["FINAL 4"] = Final_DF["Final 2"] + " | PE " + Final_DF["PE_SELL"] + (pe_sell_entry - pe_sell["o"]).round().astype(int).astype(str).str.rjust(6) + "*" + str(Sell_Lots) + " | " + Final_DF["PE_BUY"] + (pe_buy["o"] - pe_buy_entry).round().astype(int).astype(str).str.rjust(6) + "*" + str(Buy_Lots)
-				
-			if Final_DF['Change' + str(Sell_Dist)].max() > Max_Profit:
-				Max_Profit = Final_DF['Change' + str(Sell_Dist)].max()
-
-			if Index_Range in range(0, 1001):
-				Legend_Group = "0 - 1000"
+			
+			Max_Profit = Final_DF['Change' + str(Sell_Dist)].max()
+			
+			if Max_Profit in range(0, 201):
+				Legend_Group = "0 - 200"
 				Group_Rank = 1
-			elif Index_Range in range(1001, 1501):
-				Legend_Group = "1000 - 1500"
+			elif Max_Profit in range(200, 500):
+				Legend_Group = "200 - 500"
 				Group_Rank = 2
-			elif Index_Range > 1500:
-				Legend_Group = "> 1500"
+			elif Max_Profit > 500:
+				Legend_Group = "> 500"
 				Group_Rank = 3
+			elif Max_Profit < 0:
+				Legend_Group = "Loss"
+				Group_Rank = 4
 				
 			fig_dict[Sell_Dist].add_trace(go.Scatter(x=Final_DF.index, y=Final_DF["Change"+str(Sell_Dist)], legendrank = Group_Rank, mode = 'lines', legendgrouptitle_text = Legend_Group, legendgroup= Legend_Group, customdata = Final_DF, name = str(end_time_input.date()).rjust(10), hovertemplate='%{customdata[7]}<br>%{customdata[8]}'))
 
