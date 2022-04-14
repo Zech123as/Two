@@ -88,7 +88,11 @@ for Expiry_Dist in range(Expiry_Dist_input[0], Expiry_Dist_input[1] + 1, 1):
 			Exit_Time  = timedelta( hours=list(Time_Input)[1].hour, minutes = list(Time_Input)[1].minute )
 
 			Index_csv_2 = Main_Dict["Index_csv_2"].copy()
-
+			
+			Failsafe_DF = pd.DataFrame({})
+			Failsafe_DF.index = Indexcsv2.index
+			Failsafe_DF["o"] = Failsafe_DF["h"] = Failsafe_DF["l"] = Failsafe_DF["c"] = Failsafe_DF["v"] = Failsafe_DF["oi"] = 0
+			
 			Index_csv_2.index = Index_csv_2.index - (end_time_input - datetime(2010,1,7))
 
 			Index_csv_2 = Index_csv_2.reindex(pd.date_range(Entry_Date + Entry_Time, Exit_Date + Exit_Time, freq = '1min')).between_time('09:16','15:30')	
@@ -121,7 +125,10 @@ for Expiry_Dist in range(Expiry_Dist_input[0], Expiry_Dist_input[1] + 1, 1):
 
 				ce_sell = ce_sell.reindex(pd.date_range(Entry_Date + Entry_Time, Exit_Date + Exit_Time, freq = '1min')).between_time('09:16','15:30')
 				pe_sell = pe_sell.reindex(pd.date_range(Entry_Date + Entry_Time, Exit_Date + Exit_Time, freq = '1min')).between_time('09:16','15:30')
-
+				
+				if len(pe_sell) == 0:
+					pe_sell = Failsafe_DF
+				
 				ce_sell['c'] = ce_sell['c'].ffill().bfill()
 				pe_sell['c'] = pe_sell['c'].ffill().bfill()
 
@@ -136,7 +143,10 @@ for Expiry_Dist in range(Expiry_Dist_input[0], Expiry_Dist_input[1] + 1, 1):
 
 				ce_buy = Main_Dict[str(ce_atm + ce_buy_dist*Index_Dist) + 'CE'].copy()
 				pe_buy = Main_Dict[str(pe_atm + pe_buy_dist*Index_Dist) + 'PE'].copy()
-
+				
+				if len(pe_buy) == 0:
+					pe_buy = Failsafe_DF.copy()
+					
 				ce_buy.index = ce_buy.index - (end_time_input - datetime(2010,1,7))
 				pe_buy.index = pe_buy.index - (end_time_input - datetime(2010,1,7))
 
