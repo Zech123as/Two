@@ -159,7 +159,7 @@ for Expiry_Dist in range(Expiry_Dist_input[0], Expiry_Dist_input[1] + 1, 1):
 			
 			
 			Final_DF["Final 1"] = "P&L: " + (Final_DF['Change' + str(Sell_Dist)]).round().astype(int).astype(str).str.rjust(5)
-			Final_DF["Final 2"] = "Chg: " + (Index_csv_2["o"] - Index_Entry).round().astype(int).astype(str)
+			Final_DF["Final 2"] = "Chg: " + (Index_csv_2["o"] - Index_Entry).round().astype(int).astype(str).str.rjust(5)
 			
 			Final_DF["FINAL 3"] = Final_DF["Final 1"] + " CE" + Final_DF["CE_SELL"] + " * " + str(Sell_Lots) + "   |   " + Final_DF["CE_BUY"] + " * " + str(Buy_Lots)
 			Final_DF["FINAL 4"] = Final_DF["Final 2"] + " PE" + Final_DF["PE_SELL"] + " * " + str(Sell_Lots) + "   |   " + Final_DF["PE_BUY"] + " * " + str(Buy_Lots)
