@@ -69,7 +69,8 @@ for Expiry_Dist in range(Expiry_Dist_input[0], Expiry_Dist_input[1] + 1, 1):
 		try:
 			Data = pickle.loads(github_session.get(f"https://raw.githubusercontent.com/Zech123as/One/main/Expiry_Data/Expiry_Dict_{end_time_input.date()}.pkl").content)
 		except:
-			break
+			end_time_input = end_time_input
+			st.write(f'{end_time_input.strftime("%d%b%y")} Data not Available')
 		
 		Main_Dict = Data[Index_Name]
 		
@@ -164,7 +165,7 @@ for Expiry_Dist in range(Expiry_Dist_input[0], Expiry_Dist_input[1] + 1, 1):
 			Final_DF["FINAL 4"] = Final_DF["Final 2"] + " | PE " + Final_DF["PE_SELL"] + (pe_sell_entry - pe_sell["o"]).round().astype(int).astype(str).str.rjust(6) + "*" + str(Sell_Lots) + " | " + Final_DF["PE_BUY"] + (pe_buy["o"] - pe_buy_entry).round().astype(int).astype(str).str.rjust(6) + "*" + str(Buy_Lots)
 			
 			Max_Profit = (Final_DF['Change' + str(Sell_Dist)].copy()).astype(int).max()
-			st.write(Max_Profit)
+			
 			if Max_Profit in range(0, 201):
 				Legend_Group = "0 - 200"
 				Group_Rank = 1
