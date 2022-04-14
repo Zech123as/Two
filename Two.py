@@ -151,11 +151,11 @@ for Expiry_Dist in range(Expiry_Dist_input[0], Expiry_Dist_input[1] + 1, 1):
 			Final_DF['Change' + str(Sell_Dist)] = (ce_sell_entry + pe_sell_entry - (ce_sell['o'] + pe_sell['o'])) + (ce_buy['o'] + pe_buy['o'] - (ce_buy_entry + pe_buy_entry))*Buy_Lots
 			
 			
-			Final_DF["CE_SELL"] = "(" + str(round(ce_sell_entry)).rjust(6, ".") + " |" + ce_sell['o'].round().astype(int).astype(str).str.rjust(6, ".") + " )"
-			Final_DF["PE_SELL"] = "(" + str(round(pe_sell_entry)).rjust(6, ".") + " |" + pe_sell['o'].round().astype(int).astype(str).str.rjust(6, ".") + " )"
+			Final_DF["CE_SELL"] = "(" + str(round(ce_sell_entry)).rjust(6) + " |" + ce_sell['o'].round().astype(int).astype(str).str.rjust(6) + " )"
+			Final_DF["PE_SELL"] = "(" + str(round(pe_sell_entry)).rjust(6) + " |" + pe_sell['o'].round().astype(int).astype(str).str.rjust(6) + " )"
 
-			Final_DF["CE_BUY"]  = "(" + str(round(ce_buy_entry )).rjust(6, ".") + " |" +  ce_buy['o'].round().astype(int).astype(str).str.rjust(6, ".") + " )"
-			Final_DF["PE_BUY"]  = "(" + str(round(pe_buy_entry )).rjust(6, ".") + " |" +  pe_buy['o'].round().astype(int).astype(str).str.rjust(6, ".") + " )"	
+			Final_DF["CE_BUY"]  = "(" + str(round(ce_buy_entry )).rjust(6) + " |" +  ce_buy['o'].round().astype(int).astype(str).str.rjust(6) + " )"
+			Final_DF["PE_BUY"]  = "(" + str(round(pe_buy_entry )).rjust(6) + " |" +  pe_buy['o'].round().astype(int).astype(str).str.rjust(6) + " )"	
 			
 			
 			Final_DF["Final 1"] = "P&L: " + (Final_DF['Change' + str(Sell_Dist)]).round().astype(int).astype(str).str.rjust(5)
@@ -189,7 +189,7 @@ for Sell_Dist in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 	
 	fig_dict[Sell_Dist].update_yaxes(showgrid=True, gridcolor='#e0e0e0', zerolinecolor = '#989c9b')
 	
-	fig_dict[Sell_Dist].update_layout(title = Sell_Dist, height = 900, hovermode = "x", hoverlabel=dict(font_size=10, font_family="Rockwell"))
+	fig_dict[Sell_Dist].update_layout(title = Sell_Dist, height = 900, hovermode = "x", hoverlabel=dict(font_size=12, font_family="Arial"))
 	
 	st.plotly_chart(fig_dict[Sell_Dist], use_container_width = True, config={'displayModeBar': True})
 
