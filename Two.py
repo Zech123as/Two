@@ -6,7 +6,6 @@ import pandas as pd
 import requests
 import pickle
 
-
 T2 = datetime.now()
 
 st.set_page_config(layout="wide")
