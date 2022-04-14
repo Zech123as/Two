@@ -17,6 +17,8 @@ ST_Form = st.sidebar.form("St_form")
 
 Max_Profit = j = 0
 
+Sell_Lots = 1
+
 Index_Name = ST_Form.radio("Select Index", ("NIFTY BANK", "NIFTY 50"))
 Expiry_Dist_input = ST_Form.slider("Select Expiry Distance", min_value = 0, max_value = 40, value = (2,2))
 
