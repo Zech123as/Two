@@ -184,7 +184,7 @@ for Expiry_Dist in range(Expiry_Dist_input[0], Expiry_Dist_input[1] + 1, 1):
 for Sell_Dist in range((Sell_Dist_input)[0], (Sell_Dist_input)[1]+1, 1):
 
 	fig_dict[Sell_Dist].update_xaxes(showspikes=True, spikedash = "solid", spikecolor="red", spikesnap="hovered data", spikemode="across", spikethickness = 0.5)
-	fig_dict[Sell_Dist].update_xaxes(rangebreaks=[dict(bounds=[15.75, 9], pattern="hour")])
+	fig_dict[Sell_Dist].update_xaxes(rangebreaks=[{ bounds: ['sat', 'mon'] }, dict(bounds=[15.75, 9], pattern="hour")])
 	fig_dict[Sell_Dist].update_xaxes(rangeslider_visible=True)
 	fig_dict[Sell_Dist].update_xaxes(showgrid=False)
 	
