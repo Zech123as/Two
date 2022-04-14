@@ -90,7 +90,7 @@ for Expiry_Dist in range(Expiry_Dist_input[0], Expiry_Dist_input[1] + 1, 1):
 			Index_csv_2 = Main_Dict["Index_csv_2"].copy()
 			
 			Failsafe_DF = pd.DataFrame({})
-			Failsafe_DF.index = Indexcsv2.index
+			Failsafe_DF.index = Index_csv_2.index
 			Failsafe_DF["o"] = Failsafe_DF["h"] = Failsafe_DF["l"] = Failsafe_DF["c"] = Failsafe_DF["v"] = Failsafe_DF["oi"] = 0
 			
 			Index_csv_2.index = Index_csv_2.index - (end_time_input - datetime(2010,1,7))
