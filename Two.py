@@ -158,8 +158,8 @@ for Expiry_Dist in range(Expiry_Dist_input[0], Expiry_Dist_input[1] + 1, 1):
 			Final_DF["Final 1"] = "Profit: " + (Final_DF['Change' + str(Sell_Dist)]).astype(str).str.rjust(5)
 			Final_DF["Final 2"] = "Change: " + str(Index_csv_2["o"] - Index_Entry)
 			
-			Final_DF["FINAL 3"] = Final_DF["Final 1"] + Final_DF['Change' + str(Sell_Dist)] + "CE" + Final_DF["CE_SELL"] + " * " + str(Sell_Lots) + "   |   " + Final_DF["CE_BUY"] + " * " + str(Sell_Lots)
-			Final_DF["FINAL 4"] = Final_DF["Final 2"] + Final_DF['Change' + str(Sell_Dist)] + "PE" + Final_DF["PE_SELL"] + " * " + str(Buy_Lots ) + "   |   " + Final_DF["PE_BUY"] + " * " + str(Buy_Lots )
+			Final_DF["FINAL 3"] = Final_DF["Final 1"] + str(Final_DF['Change' + str(Sell_Dist)]) + "CE" + Final_DF["CE_SELL"] + " * " + str(Sell_Lots) + "   |   " + Final_DF["CE_BUY"] + " * " + str(Sell_Lots)
+			Final_DF["FINAL 4"] = Final_DF["Final 2"] + str(Final_DF['Change' + str(Sell_Dist)]) + "PE" + Final_DF["PE_SELL"] + " * " + str(Buy_Lots ) + "   |   " + Final_DF["PE_BUY"] + " * " + str(Buy_Lots )
 				
 			if Final_DF['Change' + str(Sell_Dist)].max() > Max_Profit:
 				Max_Profit = Final_DF['Change' + str(Sell_Dist)].max()
