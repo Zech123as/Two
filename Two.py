@@ -28,7 +28,7 @@ Time_Input = ST_Form.slider("Entry & Exit Time Inputs", min_value = time(9, 15),
 Sell_Dist_input = ST_Form.slider("Sell Distance", min_value = -15, max_value = 40, value = (-10, -10))
 
 Buy_Lots  = ST_Form.slider("No of Buy Lots", min_value = 0, max_value = 15, value = 5)
-Buy_Dist  = ST_Form.slider("Buy Distance", min_value = 0, max_value = 30, value = 15)
+Buy_Dist  = ST_Form.slider("Buy Distance", min_value = -15, max_value = 40, value = 15)
 
 ST_Form.form_submit_button("Submit")
 
@@ -139,7 +139,7 @@ for Expiry_Dist in range(Expiry_Dist_input[0], Expiry_Dist_input[1] + 1, 1):
 				ce_sell_exit , pe_sell_exit  = ce_sell.o[Exit_Date + Exit_Time]  , pe_sell.o[Exit_Date + Exit_Time]
 
 
-				ce_buy_dist, pe_buy_dist = Sell_Dist + Buy_Dist, -Sell_Dist-Buy_Dist
+				ce_buy_dist, pe_buy_dist = Buy_Dist, -Buy_Dist
 
 				ce_buy = Main_Dict[str(ce_atm + ce_buy_dist*Index_Dist) + 'CE'].copy()
 				pe_buy = Main_Dict[str(pe_atm + pe_buy_dist*Index_Dist) + 'PE'].copy()
