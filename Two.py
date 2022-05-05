@@ -11,7 +11,7 @@ T2 = datetime.now()
 st.set_page_config(layout="wide")
 
 github_session = requests.Session()
-github_session.auth = ('Zech123as', "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")
+github_session.auth = ('Zech123as', "jUyH6gw4SgVmYJQMqxaZ8Sx6rWwwDSGF3X4oXe0pyhE")
 
 ST_Form = st.sidebar.form("St_form")
 
