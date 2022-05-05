@@ -68,7 +68,6 @@ for Expiry_Dist in range(Expiry_Dist_input[0], Expiry_Dist_input[1] + 1, 1):
 		
 		try:
 			Data = pickle.loads(github_session.get(f"https://raw.githubusercontent.com/Zech123as/One/main/Expiry_Data/Expiry_Dict_{end_time_input.date()}.pkl").content)
-			st.write(Data)
 			FailSafe_Data_DF = True
 		except:
 			end_time_input = end_time_input
